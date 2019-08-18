@@ -11,8 +11,8 @@ namespace MazeGeneration
         static void Main(string[] args)
         {
             Coordinate position = new Coordinate(0, 0);
-            Coordinate goal = new Coordinate(4, 4);
-            Maze map = new Maze(5, 5, position, goal);
+            Coordinate goal = new Coordinate(99, 19);
+            Maze map = new Maze(100, 20, position, goal);
             ConsoleKeyInfo move;
 
             map.Print();

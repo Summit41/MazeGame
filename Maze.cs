@@ -16,6 +16,9 @@ namespace MazeGeneration
         private const string END_DISPLAY = "!";
         private const int PLAYER = 2;
         private const string PLAYER_DISPLAY = "*";
+        private const int DEFAULT = 0;
+        private const int FOG_OF_WAR = -2;
+        private const string FOG_OF_WAR_DISPLAY = ".";
 
 
         private int[,] map;
@@ -90,14 +93,23 @@ namespace MazeGeneration
                 string line = "" + WALL;
                 for (int w = 0; w < map.GetLength(0); w++)
                 {
-                    line = line + ValueAt(w, l);
+                    if (new Coordinate(w, l).DistanceBetween(startPos) > 2)
+                    {
+                        line = line + FOG_OF_WAR;
+                    }
+                    else
+                    {
+                        line = line + ValueAt(w, l) + ",";
+                    }
                 }
 
-                line = line + WALL;
+                line = line.Substring(0, line.Length - 1) + WALL;
+                line = line.Replace("" + FOG_OF_WAR, FOG_OF_WAR_DISPLAY);
                 line = line.Replace("" + WALL, WALL_DISPLAY);
                 line = line.Replace("" + PATH, PATH_DISPLAY);
                 line = line.Replace("" + END, END_DISPLAY);
                 line = line.Replace("" + PLAYER, PLAYER_DISPLAY);
+                line = line.Replace(",", "");
                 Console.WriteLine(line);
             }
 
@@ -106,8 +118,13 @@ namespace MazeGeneration
 
         public void MoveItem(Coordinate itemPosition, Coordinate destination)
         {
+            if (this.ValueAt(itemPosition) == PLAYER)
+            {
+                this.startPos = destination;
+            }
+
             map[destination.x, destination.y] = map[itemPosition.x, itemPosition.y];
-            map[itemPosition.x, itemPosition.y] = PATH;
+            map[itemPosition.x, itemPosition.y] = DEFAULT;
         }
 
         public int ValueAt(Coordinate position)

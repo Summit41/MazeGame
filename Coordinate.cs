@@ -38,5 +38,15 @@ namespace MazeGeneration
         {
             return "(" + this.x + ", " + this.y + ")";
         }
+
+        public double DistanceBetween(Coordinate compare)
+        {
+            return Math.Sqrt(Math.Abs(this.x - compare.x) + Math.Abs(this.y - compare.y));
+        }
+
+        public double DistanceBetween(int x, int y)
+        {
+            return Math.Sqrt(Math.Abs(this.x - x) + Math.Abs(this.y - y));
+        }
     }
 }
