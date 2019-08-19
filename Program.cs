@@ -4,57 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MazeGeneration
+namespace MazeGame
 {
     class Program
     {
         static void Main(string[] args)
         {
+            Random rand = new Random();
+            //int height = 27;
+            //int width = 117;
+            int height = 10;
+            int width = 10;
+
             Coordinate position = new Coordinate(0, 0);
-            Coordinate goal = new Coordinate(99, 19);
-            Maze map = new Maze(100, 20, position, goal);
-            ConsoleKeyInfo move;
+            Player player = new Player(position, "*", 3, 0);
+            EntityList.Instance.Entities.Add(player);
 
-            map.Print();
+            Map.Instance.GenerateMap(width, height);
 
-            while (!position.Equals(goal))
+            Coordinate goal = new Coordinate(rand.Next(width), rand.Next(height));
+            while (!Map.Instance.TileAt(goal).IsPathable() || goal.Equals(position))
             {
-                Console.WriteLine("What direction would you like to move?");
-                move = Console.ReadKey();
+                goal = new Coordinate(rand.Next(width), rand.Next(height));
+            }
+            Entity endPoint = new Entity(goal, "!", 0, 1);
+            EntityList.Instance.Entities.Add(endPoint);
 
 
-                if (map.CanMove(position, move.Key))
-                {
-                    if (move.Key == ConsoleKey.UpArrow || move.Key == ConsoleKey.W)
-                    {
-                        map.MoveItem(position, position.Offset(0, -1));
-                        position = position.Offset(0, -1);
-                    }
-                    else if (move.Key == ConsoleKey.DownArrow || move.Key == ConsoleKey.S)
-                    {
-                        map.MoveItem(position, position.Offset(0, 1));
-                        position = position.Offset(0, 1);
-                    }
-                    else if (move.Key == ConsoleKey.LeftArrow || move.Key == ConsoleKey.A)
-                    {
-                        map.MoveItem(position, position.Offset(-1, 0));
-                        position = position.Offset(-1, 0);
-                    }
-                    else if (move.Key == ConsoleKey.RightArrow || move.Key == ConsoleKey.D)
-                    {
-                        map.MoveItem(position, position.Offset(1, 0));
-                        position = position.Offset(1, 0);
-                    }
-                }
-
-                map.Print();
-                //Console.WriteLine(position.ToText());
+            Map.Instance.Print();
 
 
+            while (!player.GetPosition().Equals(goal))
+            {
+                ConsoleKey action = Console.ReadKey().Key;
 
+                player.AcceptInput(action);
+
+                Map.Instance.Print();
             }
 
-            Console.WriteLine("Press any key to exit...");
+            Console.Write("Press any key to exit...");
             Console.ReadKey();
         }
     }

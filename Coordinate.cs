@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MazeGeneration
+namespace MazeGame
 {
     class Coordinate
     {
@@ -41,12 +41,18 @@ namespace MazeGeneration
 
         public double DistanceBetween(Coordinate compare)
         {
-            return Math.Sqrt(Math.Abs(this.x - compare.x) + Math.Abs(this.y - compare.y));
+            double a = Math.Abs(this.x - compare.x);
+            double b = Math.Abs(this.y - compare.y);
+
+            return Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
         }
 
         public double DistanceBetween(int x, int y)
         {
-            return Math.Sqrt(Math.Abs(this.x - x) + Math.Abs(this.y - y));
+            double a = Math.Abs(this.x - x);
+            double b = Math.Abs(this.y - y);
+
+            return Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
         }
     }
 }
