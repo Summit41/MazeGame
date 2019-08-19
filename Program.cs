@@ -11,26 +11,25 @@ namespace MazeGame
         static void Main(string[] args)
         {
             Random rand = new Random();
-            //int height = 27;
-            //int width = 117;
-            int height = 10;
-            int width = 10;
+            int height = 27;
+            int width = 117;
+            //int height = 10;
+            //int width = 10;
 
             Coordinate position = new Coordinate(0, 0);
-            Player player = new Player(position, "*", 3, 0);
+            Player player = new Player(position, "*", 5, 0);
             EntityList.Instance.Entities.Add(player);
 
-            Map.Instance.GenerateMap(width, height);
+            Class1 map = new Class1(position);
+            map.GenerateMap(width, height);
+            Map.Instance.GenerateMap(map.GetMap());
 
-            Coordinate goal = new Coordinate(rand.Next(width), rand.Next(height));
-            while (!Map.Instance.TileAt(goal).IsPathable() || goal.Equals(position))
-            {
-                goal = new Coordinate(rand.Next(width), rand.Next(height));
-            }
+            Coordinate goal = map.GetEndPoint();
             Entity endPoint = new Entity(goal, "!", 0, 1);
             EntityList.Instance.Entities.Add(endPoint);
 
 
+            //map.Print();
             Map.Instance.Print();
 
 

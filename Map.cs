@@ -22,6 +22,11 @@ namespace MazeGame
             }
         }
 
+        public void GenerateMap(Tile[,] map)
+        {
+            this.map = map;
+        }
+
         public void GenerateMap(int width, int height)
         {
             this.map = new Tile[width, height];

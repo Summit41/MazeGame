@@ -35,7 +35,7 @@ namespace MazeGame
             return lineOfSight;
         }
 
-        public virtual String GetDisplay()
+        public virtual string GetDisplay()
         {
             return display;
         }

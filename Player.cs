@@ -52,6 +52,70 @@ namespace MazeGame
             }
         }
 
+        public void AcceptInput(string Direction)
+        {
+            Direction = Direction.ToUpper();
+            if (Direction == "UP" || Direction == "NORTH")
+            {
+                if (CanMove(position.Offset(0, -1)))
+                {
+                    MoveEntity(this, position.Offset(0, -1));
+                }
+            }
+            else if (Direction == "DOWN" || Direction == "SOUTH")
+            {
+                if (CanMove(position.Offset(0, 1)))
+                {
+                    MoveEntity(this, position.Offset(0, 1));
+                }
+            }
+            else if (Direction == "LEFT" || Direction == "EAST")
+            {
+                if (CanMove(position.Offset(-1, 0)))
+                {
+                    MoveEntity(this, position.Offset(-1, 0));
+                }
+            }
+            else if (Direction == "RIGHT" || Direction == "WEST")
+            {
+                if (CanMove(position.Offset(1, 0)))
+                {
+                    MoveEntity(this, position.Offset(1, 0));
+                }
+            }
+        }
+        public void AcceptInput(int Direction)
+        {
+            if (Direction == 0)
+            {
+                if (CanMove(position.Offset(0, -1)))
+                {
+                    MoveEntity(this, position.Offset(0, -1));
+                }
+            }
+            else if (Direction == 1)
+            {
+                if (CanMove(position.Offset(0, 1)))
+                {
+                    MoveEntity(this, position.Offset(0, 1));
+                }
+            }
+            else if (Direction == 2)
+            {
+                if (CanMove(position.Offset(-1, 0)))
+                {
+                    MoveEntity(this, position.Offset(-1, 0));
+                }
+            }
+            else if (Direction == 3)
+            {
+                if (CanMove(position.Offset(1, 0)))
+                {
+                    MoveEntity(this, position.Offset(1, 0));
+                }
+            }
+        }
+
         public void MoveEntity(Player entity, Coordinate destination)
         {
             if (entity.CanMove(destination))
@@ -99,5 +163,31 @@ namespace MazeGame
         {
             return displayPriority;
         }
+
+        public Tile LookNorth()
+        {
+            return Map.Instance.TileAt(position.Offset(0, -1));
+        }
+
+        public Tile LookSouth()
+        {
+            return Map.Instance.TileAt(position.Offset(0, 1));
+        }
+
+        public Tile LookEast()
+        {
+            return Map.Instance.TileAt(position.Offset(-1, 0));
+        }
+
+        public Tile LookWest()
+        {
+            return Map.Instance.TileAt(position.Offset(1, 0));
+        }
+
+        public Tile Look(int direction)
+        {
+            return Map.Instance.TileAt(position.Offset(direction));
+        }
+
     }
 }
